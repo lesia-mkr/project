@@ -1,0 +1,148 @@
+
+
+    /**
+     * @Route("/items/{category}", name="items_by_category")
+     */
+    public function byCategory($category){
+        $items = $this->getDoctrine()
+            ->getRepository(Items::class)
+            ->findAll($category); 
+        return $this->render('item/index.html.twig', [
+            'items' => 'ItemController',
+        ]);
+    }
+
+
+    
+
+    /**
+     * @Route("/article/{category}", name="article_by_category")
+     */
+    public function byCategory($category){
+        $categories = $this->getDoctrine()
+            ->getRepository(Categories::class)
+            ->findAll(); 
+        $category_by_url = $this->getDoctrine()
+            ->getRepository(Category::class)
+            ->findByUrl($category);
+        return $this->render('article/index.html.twig', [
+            'all_categories' => $categories,
+            'category_by_url' => $category_by_url
+        ]);
+    }
+
+    
+    <div class="article">
+        {% if articles %}
+                <div class="box"> 
+                    {% for article in articles %}
+                    <div>
+                        <img src="pics/logo.png">
+                        <h3>{{ article.url | upper }}</h3>
+                        <p>{{ article.text[:100] }}...</p>
+                        
+                    </div>
+                    <div class="center">
+                      <a href="{{ path('article_by_id', {'name':article.name}) }}"> читать статью полностью </a>   
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% else %}
+                <h2>Статьи не были написаны</h2>
+        {% endif %}    
+
+
+        
+    <div class="article">
+        {% if articles %}
+                <div class="box"> 
+                    {% for article in articles %}
+                    <div>
+                        <img src="pics/logo.png">
+                        <h3>{{ article.url | upper }}</h3>
+                        <p>{{ article.text[:100] }}...</p>
+                        
+                    </div>
+                    <div class="center">
+                      <a href="{{ path('article_by_id', {'name':article.name}) }}"> читать статью полностью </a>   
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% else %}
+                <h2>Статьи не были написаны</h2>
+        {% endif %}    
+    </div>
+
+
+
+    {% extends 'base.html.twig' %}
+
+{% block title %}admin{% endblock %}
+
+{% block body %}
+
+
+<div>
+    <form name="add-article" enctype="multipart/form-data"
+            method="post">
+        <div>
+        {% if categories %}
+            <label for="category">Выбор категории</label>
+            <select id="category" name="category">
+                {% for category in categories %}
+                    <option value="{{ category.idCategories }}">
+                        {{ category.name }}
+                    </option>
+                {% endfor %}
+            </select>
+        {% endif %} 
+        </div>
+        <div>
+            <label>Название статьи
+                <input type="text" name="title">
+            </label>
+        </div>
+        <div>
+            <textarea name="text" placeholder="Текст статьи">
+            </textarea>
+        </div>
+        <div>
+            <label>Изображения:
+                <input type="file" multiple name="images[]">
+            </label>
+        </div>
+        <input type="submit" value="Добавить">
+    </form>
+
+</div>
+{% endblock %}
+
+
+
+        $data = $request->request->all();
+
+        var_dump('puk');
+
+        $item = new Items;
+        // setName setDescription setCount setUrl setPrice setCategories setItemsImg 
+
+        $item->setName($data['name']);
+        $item->setDescription($data['description']);
+        $item->setCount($data['count']);
+        $item->setUrl($data['url']);
+        $item->setPrice($data['price']);
+        $categories = $this->getDoctrine()->getRepository(Categories::class)->find($data['category']);
+        $item->setCategories($categories);
+
+        
+        $entity_manager = $this->getDoctrine()->getManager();
+        $entity_manager->persist($item);
+        $entity_manager->flush();
+
+        var_dump($item);
+        return $this->json([
+            'answer' => 'Данные добавлены',
+            'id' => $item->getId()
+        ]);

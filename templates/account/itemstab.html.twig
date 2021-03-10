@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}СТАТЬИ{% endblock %}
+
+{% block style %} <link href="{{ asset('css/account.css') }}" rel="stylesheet">{% endblock %}
+{% block body %}
+<div class="account">
+
+    <div class="navlist">
+        <a href="/logout">logout</a>
+        <a href="{{ path('account-items') }}"> all items</a>
+        <a href="{{ path('account') }}"> add items</a>
+        <a href="#"> all articles</a>
+        <a href="#"> add article</a>
+    </div>
+    <div>
+        <table class="itemstab">
+            <tr>
+                <td>NAME</td>
+                <td>ИМЯ</td>
+                <td>КОЛИЧЕСТВО</td>
+                <td>ОПИСАНИЕ</td>
+                <td>КАРТОЧКА</td>
+                <td>удалить:( </td>
+            </tr>
+            {% if items %}
+                {% for item in items %}
+                <tr>
+                    <td>{{item.name}}</td>
+                    <td>{{item.url}}</td>
+                    <td>{{item.count}}</td>
+                    <td>{{item.description}}</td>
+                    <td><a href="{{ path('items_by_id', { 'id': item.iditems}) }}">link</a></td>
+                    <td><a href="{{ path('delitem', { 'id': item.iditems}) }}">удалить {{item.url}}</a> </td>
+                </tr>
+                {% endfor %}
+            {% endif %}
+        </table>
+    <script src="#"></script>
+</div>
+{% endblock %}

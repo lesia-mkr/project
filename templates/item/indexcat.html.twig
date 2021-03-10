@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}КАТАЛОГ{% endblock %}
+
+{% block body %}
+
+<div class="main">
+    <nav class="navlist">
+        {% if categories %}
+            <p class="a-non">CATEGORIES:</p>
+            {% for category in categories %}
+            <a href="{{path('items_by_category', {'category': category.name})}}">{{ category.url | upper}}</a>
+            {% endfor %}
+        {% endif %}
+    </nav>
+    
+    <div class="items">
+        {% if items_by_cat %}
+        {% for items in items_by_cat %}
+                    {% for item in items.items %}
+                    <div class="itembox">
+                        <h4>{{ item.name}}</h4>
+                        <img src="{{ asset('img/'~ item.name ~'.jpg')}}" alt="не подумала заранее">
+                        <h5>{{ item.url}}</h5>
+                        <p class='text'>{{ item.description}}</p>
+                        <p class='text'>{{ item.iditems}}</p>
+                        <p>{{ item.price}}</p>
+                        <a href="#">add to bag</a>
+                        <a href="{{ path('items_by_id', { 'id': item.iditems}) }}">more</a>
+                    </div>
+                    {% endfor %}
+        {% endfor %}
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

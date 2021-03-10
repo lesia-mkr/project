@@ -1,0 +1,69 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}СТАТЬИ{% endblock %}
+
+{% block style %} <link href="{{ asset('css/account.css') }}" rel="stylesheet">{% endblock %}
+{% block body %}
+<div class="itemform">
+    <div class="navlist">
+        <a class="logout" href="/logout">logout</a>
+        <a href="{{ path('account-items') }}"> all items</a>
+        <a href="{{ path('account') }}"> add items</a>
+        <a href="#"> all articles</a>
+        <a href="#"> add article</a>
+    </div>
+
+    <form id="additem" name="additem" enctype="multipart/form-data"
+            method="POST" action="{{ path('create_product') }}">
+         
+    <h4 class="center">ФОРМА ДОБАВЛЕНИЯ ТОВАРА:</h4>   
+        <div>
+            <label for="category">КАТЕГОРИЯ:</label>
+            <select id="category" name="category">
+                {% for category in categories %}
+                    <option value="{{ category.idCategories }}">
+                        {{ category.name }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+        <div>
+            <label>НАЗВАНИЕ/АНГЛИЙСКИЙ:
+                <input type="text" name="name">
+            </label>
+        </div>
+        <div>
+            <label>НАЗВАНИЕ/РУССКИЙ:
+                <input type="text" name="url">
+            </label>
+        </div>
+        <div><label>ОПИСАНИЕ:
+            <textarea placeholder="description" name="description">
+            </textarea>
+            </label>
+        </div>
+        <div>
+            <label>ЦЕНА:
+                <input type="number" name="price">
+            </label>
+        </div>
+        <div>
+            <label>КОЛИЧЕСТВО:
+                <input type="number" name="count">
+            </label>
+        </div>
+        <div>
+            <label>ИЗОБРАЖЕНИЕ:
+                <input type="file" name="itemsImg">
+            </label>
+        </div>
+        <div>
+            <button name="submit" type="submit" disabled >ДОБАВИТЬ</button>
+            <button type="reset">ОЧИСТИТЬ ФОРМУ</button>
+        </div>
+        
+    </form>
+</div>
+    <script src="{{ asset('js/add-item.js') }}"></script>
+
+{% endblock %}

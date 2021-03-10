@@ -1,19 +1,48 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {# Run `composer require symfony/webpack-encore-bundle`
-           and uncomment the following Encore helpers to start using Symfony UX #}
-        {% block stylesheets %}
-            {#{{ encore_entry_link_tags('app') }}#}
-        {% endblock %}
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Заголовок вкладки{% endblock %}</title>
+    {% block stylesheets %}{% endblock %}
+    {% block head_javascripts %}{% endblock %}
 
-        {% block javascripts %}
-            {#{{ encore_entry_script_tags('app') }}#}
-        {% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-    </body>
+
+
+    <link href="{{ asset('css/basic.css') }}" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    {% block style %}{% endblock %}
+</head>
+<body >
+
+    <header id="header" >
+        <div class="header">
+            <a href="/">
+              <p class="logo material-icons">coffee</p>  
+            </a>
+            <nav class="navlist">
+                <a href="/">ГЛАВНАЯ СТРАНИЦА</a>
+                <a href="/items">КАТАЛОГ</a>
+                <a href="/article">СТАТЬИ</a>
+                <a href="/account">ЛИЧНЫЙ КАБИНЕТ</a>
+            </nav>
+        </div>
+    </header>
+
+{% block body %}{% endblock %}
+    <script src="{{ asset('js/basic.js') }}"></script>
+    <footer>
+        <small>
+            <a href="#" target="_blank"><span class="material-icons">place</span>адерс</a>
+            <div>
+                <a href="#" target="_blank"><span class="material-icons">circle</span></a>
+                <a href="https://www.facebook.com/" target="_blank"><span class="material-icons">facebook</span></a>
+                <a href="#"><span class="material-icons" target="_blank">circle</span></a>
+            </div>
+        </small>
+    </footer>
+
+{% block body_javascripts %}{% endblock %}
+
+</body>
 </html>
+

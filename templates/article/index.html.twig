@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}СТАТЬИ{% endblock %}
+
+{% block body %}
+<div class='main'>
+    <nav class="navlist">
+        {% if categories %}
+            <p class="a-non">КАТЕГОРИИ:</p>
+            {% for category in categories %}
+            <a href="{{path('articles_by_category', {'category': category.name})}}">{{ category.url | upper}}</a>
+            {% endfor %}
+        {% endif %}
+    </nav>
+    <div class="article">
+        {% if articles %}
+                <div> 
+                    {% for article in articles %}
+                    <div>
+                        <img src="{{ asset('img/'~ article.categories.idCategories ~'.jpeg')}}">
+                        <h3>{{ article.url | upper }}</h3>
+                        <p>{{ article.text[:100] }}...</p>
+                        
+                    </div>
+                    <div>
+                      <a href="{{ path('article_by_id', {'name':article.name}) }}"> читать статью полностью </a>   
+                    </div>
+                    {% endfor %}
+                </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
