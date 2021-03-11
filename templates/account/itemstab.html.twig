@@ -21,6 +21,7 @@
                 <td>КОЛИЧЕСТВО</td>
                 <td>ОПИСАНИЕ</td>
                 <td>КАРТОЧКА</td>
+                <td>РЕДАКТИРОВАТЬ</td>
                 <td>удалить:( </td>
             </tr>
             {% if items %}
@@ -31,6 +32,7 @@
                     <td>{{item.count}}</td>
                     <td>{{item.description}}</td>
                     <td><a href="{{ path('items_by_id', { 'id': item.iditems}) }}">link</a></td>
+                    <td><a href="{{ path('account-edit-items', { 'id': item.iditems}) }}">link</a></td>
                     <td><a href="{{ path('delitem', { 'id': item.iditems}) }}">удалить {{item.url}}</a> </td>
                 </tr>
                 {% endfor %}

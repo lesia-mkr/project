@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}СТАТЬИ{% endblock %}
+
+{% block style %} <link href="{{ asset('css/account.css') }}" rel="stylesheet">{% endblock %}
+{% block body %}
+<div class="itemform">
+    <div class="navlist">
+        <a class="logout" href="/logout">logout</a>
+        <a href="{{ path('account-items') }}"> all items</a>
+        <a href="{{ path('account') }}"> add items</a>
+        <a href="#"> all articles</a>
+        <a href="#"> add article</a>
+    </div>
+
+    {% if item %}  
+
+    <form id="additem" name="additem" enctype="multipart/form-data"
+            method="POST" action="{{ path('edit_priduct', { 'id': item.iditems}) }}">
+         
+    <h4 class="center">ФОРМА РЕДАКТИРОВАНИЯ ТОВАРА:</h4>
+     
+        <div>
+            <label for="category">КАТЕГОРИЯ:</label>
+            <select id="category" name="category">
+                {% for category in categories %}
+                    <option value="{{ category.idCategories }}">
+                        {{ category.name }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+        <div>
+            <label>НАЗВАНИЕ/АНГЛИЙСКИЙ:
+                <input type="text" name="name" value="{{item.name}}">
+            </label>
+        </div>
+        <div>
+            <label>НАЗВАНИЕ/РУССКИЙ:
+                <input type="text" name="url" value="{{item.url}}">
+            </label>
+        </div>
+        <div><label>ОПИСАНИЕ:
+            <textarea placeholder="description" name="description" value="{{item.description}}">
+            </textarea>
+            </label>
+        </div>
+        <div>
+            <label>ЦЕНА:
+                <input type="number" name="price" value="{{item.price}}">
+            </label>
+        </div>
+        <div>
+            <label>КОЛИЧЕСТВО:
+                <input type="number" name="count" value="{{item.count}}">
+            </label>
+        </div>
+        <div>
+            <button name="submit" type="submit" disabled >ИЗМЕНИТЬ</button>
+            <button type="reset">ОЧИСТИТЬ ФОРМУ</button>
+        </div>
+       
+    </form>
+    {% endif %} 
+</div>
+    <script src="{{ asset('js/add-item.js') }}"></script>
+
+{% endblock %}

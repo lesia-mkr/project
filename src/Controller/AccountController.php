@@ -43,6 +43,24 @@ class AccountController extends AbstractController
             'categories' => $categories,
         ]);
     }
+    /**
+    * @Route("/account/items/edit/{id}", name="account-edit-items")
+    */
+    
+    public function editItem($id): Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Unable to access this page!');
+        $item = $this->getDoctrine()
+            ->getRepository(Items::class)
+            ->find($id);
+        $categories = $this->getDoctrine()
+            ->getRepository(Categories::class)
+            ->findAll();  
+        return $this->render('account/itemeditform.html.twig', [
+            'item' => $item,
+            'categories' => $categories
+        ]);
+    }
     
     /**
     * @Route("/account/items", name="account-items")

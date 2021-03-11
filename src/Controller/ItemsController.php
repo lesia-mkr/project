@@ -64,6 +64,36 @@ class ItemsController extends AbstractController
         return $this->redirectToRoute('account-items');
     }
     /**
+     * @Route("/items/editproduct/{id}", name="edit_priduct", methods={"POST"})
+     */
+    public function editProduct(Request $request, $id)
+    {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Unable to access this page!');
+        $data = $request->request->all();
+
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $product = $entityManager->getRepository(Items::class)->find($id);
+
+        if (!$product) {
+            throw $this->createNotFoundException(
+                'No product found for id '.$id
+            );
+        }
+
+        $product->setName($data['name']);
+        $product->setPrice($data['price']);
+        $product->setDescription($data['description']);
+        $product->setCount($data['count']);
+        $product->setUrl($data['url']);
+        $categories = $this->getDoctrine()->getRepository(Categories::class)->find($data['category']);
+        $product->setCategories($categories);
+        
+        $entityManager->flush();
+
+        return $this->redirectToRoute('account-items');
+    }
+    /**
     * @Route("/account/items/del/{id}", name="delitem")
     */
     public function del(Request $request, $id)
